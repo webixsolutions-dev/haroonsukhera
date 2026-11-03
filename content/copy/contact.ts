@@ -1,0 +1,35 @@
+/** CONTACT copy — docs/02-copy.md word for word. No budget or price field. */
+
+export const contactCopy = {
+  h1: "Let's work together",
+  answer: "Tell me what you need — one task or a whole project. I read every message myself.",
+  doorsH2: "Who are you?",
+  doors: { business: "Business", individual: "Individual", freelancer: "Freelancer or agency" },
+  fields: {
+    name: "Name",
+    email: "Email",
+    whatsapp: "WhatsApp (optional)",
+    website: "Website link (optional)",
+    message: "What do you need?",
+    company: "Company name",
+    businessNeeds: "What do you need?",
+    businessNeedsOptions: ["Website", "Online store", "Web app", "Design", "Video", "Marketing", "AI automation", "Not sure yet"],
+    timing: "When do you need it?",
+    timingOptions: ["ASAP", "This month", "Next 1–3 months", "Just exploring"],
+    task: "What's the task?",
+    taskOptions: ["One page", "A fix", "A design", "A campaign", "Something else"],
+    deadline: "Your client's deadline",
+    whiteLabel: "White-label needed?",
+    nda: "NDA needed?",
+    yesNo: ["Yes", "No"],
+  },
+  submit: "Send message",
+  success: "Message sent. I'll get back to you on email or WhatsApp.",
+  error: "That didn't go through. Try again, or WhatsApp me at +92 306 5389453.",
+  direct: {
+    h2: "Prefer to talk?",
+    whatsapp: "WhatsApp me",
+    email: "Email haroonsukheraofficial@gmail.com",
+    book: "Book a 20-minute call",
+  },
+} as const;

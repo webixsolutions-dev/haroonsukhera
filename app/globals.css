@@ -1,0 +1,418 @@
+@import "tailwindcss";
+
+/* ───────────────────────── Design tokens (docs/03-design-system.md) ───────────────────────── */
+:root {
+  --obsidian: #0c0d10;
+  --graphite: #17191e;
+  --line-dark: #2a2d35;
+  --bone: #f3f1ec;
+  --ash: #d9d6cf;
+  --ink: #121317;
+  --ink-muted: #5a5e68;
+  --fog: #a9adb6;
+  --white: #ffffff;
+  --molten: #ff5a1f;
+  --molten-ink: #c2410c;
+  --molten-soft: #ff8a5c;
+  --webix-red: #ed1c24;
+
+  --radius-panel: 24px;
+  --radius-card: 18px;
+  --radius-input: 12px;
+  --radius-pill: 999px;
+  --gutter: 24px;
+  --gutter-mobile: 16px;
+
+  --section-pad: clamp(64px, 6vw + 32px, 120px);
+  --container: 1240px;
+  --header-h: 72px;
+}
+
+@theme inline {
+  --color-obsidian: var(--obsidian);
+  --color-graphite: var(--graphite);
+  --color-line-dark: var(--line-dark);
+  --color-bone: var(--bone);
+  --color-ash: var(--ash);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-fog: var(--fog);
+  --color-white: var(--white);
+  --color-molten: var(--molten);
+  --color-molten-ink: var(--molten-ink);
+  --color-molten-soft: var(--molten-soft);
+  --color-webix-red: var(--webix-red);
+
+  --radius-panel: var(--radius-panel);
+  --radius-card: var(--radius-card);
+  --radius-input: var(--radius-input);
+  --radius-pill: var(--radius-pill);
+
+  --font-display: var(--font-cabinet), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
+  --font-signature: var(--font-instrument), ui-serif, Georgia, serif;
+
+  --container-site: var(--container);
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+@layer base {
+  html {
+    background: var(--obsidian);
+    color: var(--white);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--molten);
+    color: var(--ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--molten-soft);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .surface-bone :focus-visible,
+  .surface-light :focus-visible {
+    outline-color: var(--molten-ink);
+  }
+}
+
+/* ───────────────────────── Type scale ───────────────────────── */
+@layer components {
+  .t-h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.5rem, 1.4rem + 4.6vw, 5.25rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .t-h2 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.9rem, 1.3rem + 2.4vw, 3.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .t-h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.2rem, 1.1rem + 0.5vw, 1.55rem);
+    line-height: 1.2;
+  }
+  .t-lead {
+    font-size: 19px;
+    line-height: 1.55;
+    max-width: 66ch;
+  }
+  .t-body {
+    font-size: 17px;
+    line-height: 1.65;
+    max-width: 66ch;
+  }
+  .t-small {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .t-signature {
+    font-family: var(--font-signature);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  /* ───────────────────────── Liquid Glass recipe ───────────────────────── */
+  .glass {
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radius-panel);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+      inset 0 0 24px rgba(255, 255, 255, 0.04),
+      0 18px 40px -12px rgba(0, 0, 0, 0.55);
+  }
+  .glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(240px circle at var(--mx, 30%) var(--my, 0%), rgba(255, 255, 255, 0.18), transparent 60%);
+  }
+  .glass--text {
+    background: rgba(12, 13, 16, 0.58);
+  }
+  .glass--on-light {
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(18, 19, 23, 0.1);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 rgba(18, 19, 23, 0.04),
+      0 18px 40px -16px rgba(18, 19, 23, 0.25);
+  }
+  .glass--on-light::before {
+    background: radial-gradient(240px circle at var(--mx, 30%) var(--my, 0%), rgba(255, 255, 255, 0.6), transparent 60%);
+  }
+  .glass--molten {
+    background: linear-gradient(160deg, rgba(255, 90, 31, 0.22), rgba(255, 90, 31, 0.06) 55%, rgba(12, 13, 16, 0.5));
+    border-color: rgba(255, 138, 92, 0.3);
+  }
+  /* Refraction — progressive enhancement, desktop Chromium only, never on body-text panels. */
+  .has-refraction .glass--refract {
+    backdrop-filter: url(#liquid) blur(14px) saturate(180%);
+  }
+
+  /* ───────────────────────── Buttons ───────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0 1.4rem;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1;
+    white-space: nowrap;
+    transition:
+      transform 0.2s ease,
+      filter 0.2s ease,
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+  .btn--primary {
+    background: var(--molten);
+    color: var(--ink);
+  }
+  .btn--primary:hover {
+    filter: brightness(1.08);
+  }
+  .btn--glass {
+    color: var(--white);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(16px) saturate(170%);
+    -webkit-backdrop-filter: blur(16px) saturate(170%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  .btn--glass:hover {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
+  }
+  .btn--outline-light {
+    color: var(--ink);
+    border: 1px solid rgba(18, 19, 23, 0.22);
+    background: transparent;
+  }
+  .btn--outline-light:hover {
+    border-color: var(--ink);
+  }
+  .btn--text {
+    min-height: 44px;
+    padding: 0 0.25rem;
+    border-radius: 6px;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+  }
+  .btn--text:hover {
+    transform: none;
+    text-decoration-thickness: 2px;
+  }
+
+  /* ───────────────────────── Chips & kicker ───────────────────────── */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 34px;
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-pill);
+    font-size: 14px;
+    line-height: 1.25;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .surface-bone .chip,
+  .chip--light {
+    border-color: var(--ash);
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.6);
+  }
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--molten-soft);
+  }
+  .kicker::before {
+    content: "";
+    width: 18px;
+    height: 1px;
+    background: currentColor;
+  }
+  .surface-bone .kicker {
+    color: var(--molten-ink);
+  }
+
+  .hairline {
+    border-color: var(--line-dark);
+  }
+  .surface-bone .hairline {
+    border-color: var(--ash);
+  }
+}
+
+/* ───────────────────────── Fallbacks & preferences ───────────────────────── */
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass--text,
+  .glass--molten,
+  .btn--glass {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: var(--graphite) !important;
+  }
+  .glass--on-light {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: #ffffff !important;
+  }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass,
+  .btn--glass {
+    background: rgba(23, 25, 30, 0.92);
+  }
+  .glass--on-light {
+    background: rgba(255, 255, 255, 0.94);
+  }
+}
+/* Manual toggle used by QA (and the styleguide) to emulate reduced transparency. */
+html[data-reduce-transparency] .glass,
+html[data-reduce-transparency] .btn--glass {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: var(--graphite) !important;
+}
+html[data-reduce-transparency] .glass--on-light {
+  background: #fff !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .btn:hover {
+    transform: none;
+  }
+}
+
+/* ───────────────────────── Utilities ───────────────────────── */
+@utility container-site {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter-mobile);
+  @media (width >= 768px) {
+    padding-inline: var(--gutter);
+  }
+}
+@utility section-pad {
+  padding-block: var(--section-pad);
+}
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Hero load moment — the one orchestrated animation. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.hero-in {
+  animation: hero-rise 0.9s cubic-bezier(0.2, 0.7, 0.1, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+.hero-fade {
+  animation: hero-fade 1.2s ease both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Process line draw (one scroll moment). */
+.process-line {
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 1.4s cubic-bezier(0.3, 0.6, 0.1, 1);
+}
+.process-line[data-drawn="true"] {
+  transform: scaleX(1);
+}
+@media (max-width: 767px) {
+  .process-line {
+    transform-origin: top center;
+    transform: scaleY(0);
+  }
+  .process-line[data-drawn="true"] {
+    transform: scaleY(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .process-line {
+    transform: none !important;
+  }
+}

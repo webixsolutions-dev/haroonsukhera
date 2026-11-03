@@ -1,0 +1,33 @@
+# Haroon Sukhera
+
+> Haroon Sukhera is a Pakistani full-stack web developer and the founder and CEO of Webix Solutions, a digital and AI agency. He started as a freelance WordPress developer, has built 150+ websites, and leads a 20+ person team delivering websites, e-commerce, design, video, SEO, paid ads, social media and AI automation.
+
+## Facts
+- Name: Haroon Sukhera (also written M Haroon Rasheed)
+- Role: Full-Stack Web Developer; Founder & CEO, Webix Solutions (https://webixsolutions.com/)
+- Based in: Punjab, Pakistan
+- Education: Bachelor of Computer Science, Islamia University Bahawalpur
+- Builds with: Next.js, React, Node.js, WordPress, Elementor, WooCommerce, Shopify, n8n
+- Websites built: 150+
+- Team: 20+ people (developers, designers, video editors, marketers, AI engineers)
+- Clients in: Canada, United States, United Arab Emirates, New Zealand, Pakistan, Palestine
+- Works with: businesses, individuals (including single tasks), freelancers and agencies (white-label, NDA on request)
+- AI systems built: LeadPilot (Google Maps lead engine, n8n + OpenAI), ReplyDesk (AI reply and WhatsApp assistant, n8n + OpenAI)
+
+## Pages
+- About and official bio: https://haroonsukhera.com/about/
+- Services: https://haroonsukhera.com/services/
+- Work: https://haroonsukhera.com/work/
+- Contact: https://haroonsukhera.com/contact/
+
+## Contact
+- Email: haroonsukheraofficial@gmail.com
+- WhatsApp: +92 306 5389453
+
+## Profiles
+- LinkedIn: https://www.linkedin.com/in/haroonsukhera/
+- Upwork: https://www.upwork.com/freelancers/~0177d947f87a6fe31c
+- Facebook: https://www.facebook.com/haroonsukheraofficial
+- Instagram: https://www.instagram.com/haroonsukheraofficial
+- Threads: https://www.threads.com/@haroonsukheraofficial
+- GitHub (Webix Solutions): https://github.com/webixsolutions-dev
