@@ -1,12 +1,15 @@
 import { chromium } from "playwright";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, existsSync } from "node:fs";
 
 const url = process.argv[2] || "http://localhost:3000/styleguide/";
 const outPrefix = process.argv[3] || "qa/styleguide";
 
 mkdirSync("qa", { recursive: true });
 
-const browser = await chromium.launch();
+const chromeExe = "C:/Users/Administrator/AppData/Local/ms-playwright/chromium-1248/chrome-win64/chrome.exe";
+const launchOptions = existsSync(chromeExe) ? { executablePath: chromeExe } : {};
+
+const browser = await chromium.launch(launchOptions);
 const viewports = [
   { name: "390", width: 390, height: 844, isMobile: true, deviceScaleFactor: 2 },
   { name: "768", width: 768, height: 1024, isMobile: false, deviceScaleFactor: 1 },
