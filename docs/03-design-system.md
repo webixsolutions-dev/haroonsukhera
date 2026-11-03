@@ -1,0 +1,75 @@
+# 03 — Design system: Liquid Glass + 3D
+
+## Tokens (CSS variables in `app/globals.css`)
+```css
+--obsidian: #0C0D10;   /* main dark surface */
+--graphite: #17191E;   /* second dark surface */
+--line-dark: #2A2D35;  /* hairlines on dark */
+--bone: #F3F1EC;       /* main light surface */
+--ash: #D9D6CF;        /* hairlines/soft fills on light */
+--ink: #121317;        /* text on light */
+--ink-muted: #5A5E68;  /* secondary text on light */
+--fog: #A9ADB6;        /* secondary text on dark */
+--white: #FFFFFF;
+--molten: #FF5A1F;     /* accent: fills, glows, big type */
+--molten-ink: #C2410C; /* accent text/buttons on light (AA) */
+--molten-soft: #FF8A5C;/* accent text on dark (AA) */
+--webix-red: #ED1C24;  /* Webix section only */
+--radius-panel: 24px; --radius-card: 18px; --radius-input: 12px; --radius-pill: 999px;
+--gutter: 24px; --gutter-mobile: 16px;
+```
+Surfaces: Obsidian, Graphite, Bone, Molten light field (image). Neighbouring sections never share one.
+
+## Typography
+- Display: **Cabinet Grotesk** 800 for H1/H2, 500 for H3. Text: **Satoshi** 400/500. Signature: **Instrument Serif italic** (only the name in hero, header, footer, About H1 accent).
+- H1 `clamp(2.5rem, 1.4rem + 4.6vw, 5.25rem)` / 1.0 / -0.03em
+- H2 `clamp(1.9rem, 1.3rem + 2.4vw, 3.4rem)` / 1.05 / -0.02em
+- H3 `clamp(1.2rem, 1.1rem + .5vw, 1.55rem)` / 1.2
+- Lead 19px/1.55 · Body 17px/1.65 · Small 14px. Paragraphs ≤ 66ch. Sentence case.
+
+## Liquid Glass recipe
+```css
+.glass {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: var(--radius-panel);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.40),     /* top specular edge */
+    inset 0 -1px 0 rgba(255,255,255,.06),
+    inset 0 0 24px rgba(255,255,255,.04),    /* body sheen */
+    0 18px 40px -12px rgba(0,0,0,.55);       /* lift */
+}
+.glass::before { /* moving highlight, follows pointer on desktop only */
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background: radial-gradient(240px circle at var(--mx,30%) var(--my,0%), rgba(255,255,255,.18), transparent 60%);
+}
+.glass--text { background: rgba(12,13,16,.58); }   /* text-heavy panels: guarantees AA */
+.glass--on-light { background: rgba(255,255,255,.55); border-color: rgba(18,19,23,.10); }
+@media (prefers-reduced-transparency: reduce) { .glass { backdrop-filter:none; background: var(--graphite); } }
+@supports not (backdrop-filter: blur(1px)) { .glass { background: rgba(23,25,30,.92); } }
+```
+**Refraction (progressive enhancement):** on desktop Chromium only, add an SVG `feTurbulence` + `feDisplacementMap` filter (scale ~18) to the hero card and header pill via `backdrop-filter: url(#liquid) blur(14px) saturate(180%)`. Feature-detect in a tiny client script; everyone else keeps the blur recipe. Never apply refraction to panels with body text.
+
+**Buttons:** primary = solid Molten pill, `--ink` text, 48px tall, hover lifts 2px and brightens; secondary = glass pill. Focus ring 2px `--molten-soft` (dark) / `--molten-ink` (light), 3px offset. Tap targets ≥ 44px.
+
+## 3D — "Orbit H"
+- Desktop ≥ 1024px, `matchMedia('(prefers-reduced-motion: no-preference)')`, and a WebGL check: render with React Three Fiber, lazy-loaded with `next/dynamic` (`ssr:false`) after first paint. The poster image (`hero-orbit-desktop.webp`) stays visible until the canvas is ready, then cross-fades.
+- Geometry (procedural, no model file): two rounded boxes (pillars) in titanium (`MeshPhysicalMaterial` metalness 1, roughness 0.28, brushed anisotropy if available); a rounded-box crossbar in glass (`transmission` 1, thickness 0.6, ior 1.45) with molten emissive core; a thin torus ring in glass; a small sphere with molten emissive orbiting slowly on the ring. Environment: `drei` `Environment` preset "studio" + one warm rim `pointLight` (#FF5A1F).
+- Motion: slow idle float; pointer-follow tilt (max 8°); on the home Core section the object rotates to a new angle per selected capability (6 angles). `dpr` capped at 1.75; `frameloop="demand"` when idle.
+- Mobile / no WebGL / reduced motion: static images (`hero-orbit-mobile.webp`), gentle CSS parallax only.
+- Budget: route JS < 150 KB gzipped excluding the lazy 3D chunk; 3D chunk never loads on phones. LCP element = hero poster/photo, < 2.0 s.
+
+## Photos
+- Hero desktop: `photos/haroon-hero-cutout.webp` (transparent) over the 3D scene. Hero mobile: `photos/haroon-hero-studio.webp`.
+- Meet Haroon: `photos/haroon-at-work.webp` (background already blurred; screens unreadable).
+- About: `photos/haroon-story.webp`.
+- Originals in `assets/photos-original/` if a better cut-out is needed (the current cut-outs are automatic; edges can be refined later).
+
+## Imagery rules
+Use only the provided images. Work thumbnails are generated by `scripts/compose_mockups.py` (real screenshots on the provided device scenes). No stock photos, no AI-generated people.
+
+## Layout
+Container 1240px, 12 columns; mobile side padding 16px. Section padding `clamp(64px, 6vw + 32px, 120px)`. Mobile hero height = content height (never 100vh). Lists > 6 items → chips, carousel or accordion.
