@@ -84,7 +84,7 @@ export default function StyleguidePage() {
             <div>
               <p className="text-xs font-mono text-fog">t-body (17px/1.65, max 66ch)</p>
               <p className="t-body mt-1 text-fog">
-                I started as a freelance WordPress developer. More than 150 websites later, I write custom platforms in Next.js and React — and I still take on WordPress and Shopify work when it's the right tool for the job.
+                I started as a freelance WordPress developer. More than 150 websites later, I write custom platforms in Next.js and React — and I still take on WordPress and Shopify work when it&apos;s the right tool for the job.
               </p>
             </div>
           </div>

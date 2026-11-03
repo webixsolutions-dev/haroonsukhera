@@ -1,8 +1,8 @@
 import { chromium } from "playwright";
 import { mkdirSync, existsSync } from "node:fs";
 
-const url = process.argv[2] || "http://localhost:3000/styleguide/";
-const outPrefix = process.argv[3] || "qa/styleguide";
+const url = process.argv[2] || "http://localhost:3000/";
+const outPrefix = process.argv[3] || "qa/home";
 
 mkdirSync("qa", { recursive: true });
 
@@ -24,7 +24,32 @@ for (const vp of viewports) {
   });
 
   await page.goto(url, { waitUntil: "networkidle", timeout: 30000 }).catch(() => {});
-  await page.waitForTimeout(1000);
+
+  // Scroll down the page in steps to trigger all lazy-loaded images and intersection observers
+  await page.evaluate(async () => {
+    const distance = 450;
+    const delay = 80;
+    const maxScroll = document.documentElement.scrollHeight;
+    for (let y = 0; y <= maxScroll; y += distance) {
+      window.scrollTo(0, y);
+      await new Promise((r) => setTimeout(r, delay));
+    }
+    // Wait for all images to decode
+    const imgs = Array.from(document.querySelectorAll("img"));
+    await Promise.all(
+      imgs.map((img) => {
+        if (img.complete) return Promise.resolve();
+        return new Promise((res) => {
+          img.addEventListener("load", res, { once: true });
+          img.addEventListener("error", res, { once: true });
+          setTimeout(res, 2500);
+        });
+      })
+    );
+    window.scrollTo(0, 0);
+  });
+
+  await page.waitForTimeout(800);
 
   const file = `${outPrefix}-${vp.name}.png`;
   await page.screenshot({ path: file, fullPage: true });

@@ -94,8 +94,8 @@ export function ContactAdaptiveForm() {
       {/* Doors selection */}
       <div className="mb-10">
         <h2 className="t-h3 mb-5 text-white">{contactCopy.doorsH2}</h2>
-        <div className="grid gap-4 sm:grid-cols-3">
-          {doors.map((door) => {
+        <div className="grid gap-4 md:grid-cols-3">
+          {doors.map((door, idx) => {
             const isSelected = clientType === door.type;
             return (
               <button
@@ -103,24 +103,50 @@ export function ContactAdaptiveForm() {
                 type="button"
                 onClick={() => setClientType(door.type)}
                 className={cn(
-                  "flex flex-col items-start rounded-2xl border p-5 text-left transition-all",
+                  "group relative flex flex-col justify-between overflow-hidden rounded-[22px] border p-5 text-left transition-all duration-200",
                   isSelected
-                    ? "border-molten bg-molten/15 text-white shadow-lg"
-                    : "border-white/15 bg-white/5 text-fog hover:border-white/30 hover:text-white"
+                    ? "border-molten bg-molten/15 text-white shadow-[0_18px_45px_-15px_rgba(255,90,31,0.45)]"
+                    : "border-white/14 bg-white/[0.04] text-fog hover:border-white/30 hover:bg-white/[0.07] hover:text-white"
                 )}
               >
-                <div className="flex w-full items-center justify-between">
-                  <span className="font-display font-bold text-lg text-white">
-                    {door.title}
-                  </span>
-                  <span
-                    className={cn(
-                      "h-4 w-4 rounded-full border-2",
-                      isSelected ? "border-molten bg-molten" : "border-white/30"
-                    )}
-                  />
+                <div>
+                  <div className="flex w-full items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-white/12 bg-obsidian/80 p-1">
+                        <Image
+                          src={door.image}
+                          alt=""
+                          fill
+                          sizes="44px"
+                          className="object-contain p-1"
+                        />
+                      </div>
+                      <div>
+                        <span className="block font-display text-xs font-extrabold text-molten-soft">
+                          0{idx + 1}
+                        </span>
+                        <span className="font-display text-lg font-bold text-white">
+                          {door.title}
+                        </span>
+                      </div>
+                    </div>
+                    <span
+                      className={cn(
+                        "flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
+                        isSelected
+                          ? "border-molten bg-molten"
+                          : "border-white/30"
+                      )}
+                    >
+                      {isSelected && (
+                        <span className="h-2 w-2 rounded-full bg-ink" />
+                      )}
+                    </span>
+                  </div>
+                  <p className="t-small mt-3.5 leading-relaxed text-white/80">
+                    {door.body}
+                  </p>
                 </div>
-                <p className="t-small mt-2 text-fog">{door.body}</p>
               </button>
             );
           })}
@@ -128,7 +154,7 @@ export function ContactAdaptiveForm() {
       </div>
 
       {/* Adaptive Form in Liquid Glass */}
-      <Glass variant="text" className="p-6 md:p-10 lg:p-12">
+      <Glass variant="text" refract className="p-6 sm:p-8 md:p-10 lg:p-12">
         {status === "success" ? (
           <div className="flex flex-col items-center py-8 text-center">
             <div className="relative mb-6 h-28 w-28 overflow-hidden rounded-2xl">

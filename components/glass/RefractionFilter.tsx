@@ -19,6 +19,7 @@ export function RefractionFilter() {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const supportsUrl = CSS.supports("backdrop-filter", "url(#liquid) blur(1px)");
     if (isChromium && desktop && !reduced && supportsUrl) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setOn(true);
       document.documentElement.classList.add("has-refraction");
     }

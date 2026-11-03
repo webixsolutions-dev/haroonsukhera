@@ -15,19 +15,28 @@ export function ContactFaq() {
   };
 
   return (
-    <Section surface="bone" id="contact-faq">
-      <Container>
+    <Section surface="bone" id="contact-faq" className="overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-grid-light mask-radial-fade opacity-70"
+      />
+      <Container className="relative z-10">
         <div className="mx-auto max-w-3xl">
           <h2 className="t-h2 text-center text-ink">Frequently asked questions</h2>
 
-          <div className="mt-10 space-y-4">
+          <div className="mt-10 space-y-3.5">
             {contactFaq.map((faq, idx) => {
               const isOpen = openIndex === idx;
 
               return (
                 <div
                   key={idx}
-                  className="rounded-2xl border border-ash/80 bg-white transition-shadow hover:shadow-md"
+                  className={cn(
+                    "overflow-hidden rounded-[20px] border transition-all duration-200",
+                    isOpen
+                      ? "border-ink/25 bg-white shadow-[0_20px_48px_-22px_rgba(18,19,23,0.16)]"
+                      : "border-ink/10 bg-white/80 hover:border-ink/20 hover:bg-white"
+                  )}
                 >
                   <button
                     type="button"
@@ -36,16 +45,24 @@ export function ContactFaq() {
                     aria-controls={`contact-faq-answer-${idx}`}
                     className="flex w-full items-center justify-between gap-4 p-5 text-left md:p-6"
                   >
-                    <span className="font-display text-lg font-bold text-ink sm:text-xl">
-                      {faq.q}
-                    </span>
-                    <ChevronDown
-                      size={20}
+                    <div className="flex items-baseline gap-3.5">
+                      <span className="font-display text-xs font-extrabold text-molten-ink">
+                        0{idx + 1}
+                      </span>
+                      <span className="font-display text-lg font-bold text-ink sm:text-xl">
+                        {faq.q}
+                      </span>
+                    </div>
+                    <span
                       className={cn(
-                        "shrink-0 text-ink-muted transition-transform duration-300",
-                        isOpen && "rotate-180"
+                        "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300",
+                        isOpen
+                          ? "border-molten bg-molten text-ink rotate-180"
+                          : "border-ink/12 bg-bone text-ink-muted"
                       )}
-                    />
+                    >
+                      <ChevronDown size={18} />
+                    </span>
                   </button>
 
                   <div
@@ -55,7 +72,7 @@ export function ContactFaq() {
                       isOpen ? "block" : "hidden"
                     )}
                   >
-                    <p className="t-body border-t border-ash/40 pt-4 leading-relaxed">
+                    <p className="t-body border-t border-ash/50 pl-7 pt-4 leading-relaxed">
                       {faq.a}
                     </p>
                   </div>

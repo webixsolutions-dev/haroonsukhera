@@ -76,41 +76,56 @@ export function Header() {
       >
         Skip to content
       </a>
-      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-5">
+      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-5 md:pt-4">
         <div
           className={cn(
-            "mx-auto flex h-[60px] max-w-[1240px] items-center justify-between gap-4 rounded-full border pl-4 pr-2 text-white transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 md:pl-5",
+            "glass glass--text glass--refract mx-auto flex max-w-[1240px] items-center justify-between gap-4 rounded-full pl-4 pr-2 text-white transition-all duration-300 md:pl-5 md:pr-2.5",
             scrolled
-              ? "glass glass--refract border-white/15 bg-obsidian/40"
-              : "border-transparent bg-transparent shadow-none",
+              ? "h-[58px] border-white/20 shadow-[0_24px_64px_-16px_rgba(0,0,0,0.85)]"
+              : "h-[64px] border-white/15 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.65)]",
           )}
         >
           <Logo />
           <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
-            {mainNav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={isActive(item.href) ? "page" : undefined}
-                className={cn(
-                  "rounded-full px-3.5 py-2.5 text-[15px] font-medium text-white/80 transition-colors hover:text-white",
-                  isActive(item.href) && "text-white",
-                )}
-              >
-                {item.label}
-                {isActive(item.href) && (
-                  <span aria-hidden className="mx-auto mt-0.5 block h-[3px] w-[3px] rounded-full bg-molten" />
-                )}
-              </Link>
-            ))}
-            <Link href={workWithMeCta.href} className="btn btn--primary ml-2 min-h-[44px] px-5 text-[15px]">
+            {mainNav.map((item) => {
+              const active = isActive(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "relative rounded-full px-4 py-2 text-[15px] font-medium transition-all duration-200",
+                    active
+                      ? "bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]"
+                      : "text-white/75 hover:bg-white/5 hover:text-white",
+                  )}
+                >
+                  {item.label}
+                  {active && (
+                    <span
+                      aria-hidden
+                      className="mx-auto mt-0.5 block h-[3px] w-3 rounded-full bg-molten shadow-[0_0_8px_#FF5A1F]"
+                    />
+                  )}
+                </Link>
+              );
+            })}
+            <Link
+              href={workWithMeCta.href}
+              className="btn btn--primary ml-2 min-h-[44px] px-5 text-[15px]"
+            >
+              <span
+                aria-hidden
+                className="h-2 w-2 rounded-full bg-ink/80 shadow-[0_0_0_3px_rgba(18,19,23,0.18)]"
+              />
               {workWithMeCta.label}
             </Link>
           </nav>
           <button
             ref={buttonRef}
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white transition-colors hover:bg-white/15 md:hidden"
             aria-expanded={open}
             aria-controls="mobile-sheet"
             aria-label={open ? "Close menu" : "Open menu"}

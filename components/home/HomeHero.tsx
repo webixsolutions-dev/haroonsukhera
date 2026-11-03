@@ -9,9 +9,9 @@ export function HomeHero() {
   const { hero } = homeCopy;
 
   return (
-    <section className="relative min-h-[90vh] overflow-hidden bg-obsidian pb-16 pt-24 md:min-h-screen md:pb-24 md:pt-28">
+    <section className="relative flex min-h-[92vh] items-center overflow-hidden bg-obsidian pb-20 pt-28 md:min-h-screen md:pb-28 md:pt-32">
       {/* Background glass color field */}
-      <div className="pointer-events-none absolute inset-0 z-0 opacity-40 md:opacity-60">
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-65 md:opacity-80">
         <Image
           src="/images/hero/hero-glass-field.webp"
           alt=""
@@ -22,49 +22,73 @@ export function HomeHero() {
         />
       </div>
 
+      {/* Architectural precision grid + radial molten pools */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 bg-grid-dark mask-radial-fade opacity-75"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-24 top-1/4 z-0 h-[420px] w-[420px] rounded-full bg-molten/20 blur-[130px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[5%] top-1/3 z-0 h-[460px] w-[460px] rounded-full bg-molten/18 blur-[140px]"
+      />
+
       {/* Mobile Orbit H background render */}
-      <div className="pointer-events-none absolute right-[-20%] top-[10%] z-0 h-[480px] w-[480px] opacity-25 md:hidden">
+      <div className="pointer-events-none absolute right-[-22%] top-[6%] z-0 h-[420px] w-[420px] opacity-35 md:hidden">
         <Image
           src="/images/hero/hero-orbit-mobile.webp"
           alt=""
           fill
           priority
-          sizes="480px"
+          sizes="420px"
           className="object-contain"
         />
       </div>
 
-      <div className="container-site relative z-10 flex flex-col justify-center">
-        {/* Mobile photo on top (studio version) */}
-        <div className="mx-auto mb-6 flex justify-center md:hidden">
-          <div className="relative h-28 w-28 overflow-hidden rounded-full border-2 border-molten/40 shadow-xl">
-            <Image
-              src="/images/photos/haroon-hero-studio.webp"
-              alt="Haroon Sukhera"
-              fill
-              priority
-              sizes="112px"
-              className="object-cover"
-            />
-          </div>
-        </div>
+      <div className="container-site relative z-10">
+        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+          {/* Left: Sculpted Liquid Glass Command Card */}
+          <div className="relative lg:col-span-7">
+            <Glass
+              variant="text"
+              refract
+              className="relative overflow-hidden p-6 sm:p-8 md:p-11 lg:p-12"
+            >
+              {/* Subtle top specular molten glow inside the card */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-molten/15 blur-3xl"
+              />
 
-        <div className="grid items-center gap-8 md:grid-cols-12 md:gap-12">
-          {/* Left: Text & Glass Card */}
-          <div className="relative md:col-span-7">
-            <Glass variant="text" refract className="p-6 md:p-10 lg:p-12">
+              {/* Top Founder Dossier Header */}
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+                <div className="inline-flex items-center gap-2.5 text-sm font-medium text-white/85">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-molten opacity-75" />
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-molten" />
+                  </span>
+                  <span>Founder &amp; CEO · Webix Solutions</span>
+                </div>
+                <span className="rounded-full border border-white/12 bg-white/[0.04] px-3 py-1 text-xs font-medium text-fog">
+                  Lahore, Pakistan
+                </span>
+              </div>
+
               <h1 className="t-h1 text-white">
-                <span className="t-signature mb-2 block text-[clamp(2.8rem,2rem+3.5vw,5rem)] font-normal not-italic tracking-normal text-white">
+                <span className="t-signature mb-2 block text-[clamp(3rem,2.1rem+3.6vw,5.25rem)] font-normal leading-[0.95] text-white drop-shadow-[0_8px_24px_rgba(0,0,0,0.45)]">
                   {hero.h1Name}
                 </span>
-                <span className="block text-[clamp(1.85rem,1.3rem+2.2vw,3.2rem)] font-extrabold leading-[1.08] tracking-tight text-white">
+                <span className="block text-[clamp(1.85rem,1.35rem+2.2vw,3.15rem)] font-extrabold leading-[1.08] tracking-[-0.025em] text-white">
                   {hero.h1Line}
                 </span>
               </h1>
 
-              <p className="t-lead mt-5 text-white/90">{hero.sub}</p>
+              <p className="t-lead mt-5 max-w-[58ch] text-white/90">{hero.sub}</p>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div className="mt-8 flex flex-wrap items-center gap-3.5">
                 <Button href={hero.primary.href} variant="primary">
                   {hero.primary.label}
                 </Button>
@@ -73,32 +97,43 @@ export function HomeHero() {
                 </Button>
               </div>
 
-              <div className="mt-8 flex flex-wrap gap-2 border-t border-white/10 pt-6">
-                {hero.chips.map((chip) => (
-                  <Chip key={chip}>{chip}</Chip>
-                ))}
+              {/* Integrated Founder Portrait & Proof Bar (zero overlapping text) */}
+              <div className="mt-9 border-t border-white/12 pt-6">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-molten/50 bg-obsidian shadow-[0_12px_30px_-8px_rgba(255,90,31,0.45)] sm:h-[72px] sm:w-[72px]">
+                    <Image
+                      src="/images/photos/haroon-hero-studio.webp"
+                      alt="Haroon Sukhera"
+                      fill
+                      priority
+                      sizes="72px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap gap-2">
+                      {hero.chips.map((chip) => (
+                        <Chip key={chip}>{chip}</Chip>
+                      ))}
+                    </div>
+                    <p className="t-small mt-2.5 text-fog">{hero.clientsLine}</p>
+                  </div>
+                </div>
               </div>
-
-              <p className="t-small mt-4 text-fog">{hero.clientsLine}</p>
             </Glass>
-
-            {/* Desktop Cutout photo overlapping bottom-left */}
-            <div className="pointer-events-none absolute -bottom-6 -left-6 z-20 hidden h-44 w-44 lg:block">
-              <div className="relative h-full w-full drop-shadow-2xl">
-                <Image
-                  src="/images/photos/haroon-hero-cutout.webp"
-                  alt="Haroon Sukhera"
-                  fill
-                  priority
-                  sizes="176px"
-                  className="object-contain"
-                />
-              </div>
-            </div>
           </div>
 
-          {/* Right: 3D Orbit H (desktop) */}
-          <div className="relative hidden h-[540px] md:col-span-5 md:block lg:h-[620px]">
+          {/* Right: 3D Orbit H Stage (desktop) */}
+          <div className="relative hidden h-[520px] lg:col-span-5 lg:block xl:h-[600px]">
+            {/* Architectural orbital rings behind the 3D object */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-8 rounded-full border border-white/[0.06]"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-20 rounded-full border border-dashed border-molten/20"
+            />
             <OrbitHView />
           </div>
         </div>
